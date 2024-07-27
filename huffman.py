@@ -8,7 +8,7 @@ class No:
         self.left = None
         self.right = None
     
-    def __lt__(self, no: No):
+    def __lt__(self, no):
         return self.frequencia < no.frequencia
 
 def arvore_huffman(word):
