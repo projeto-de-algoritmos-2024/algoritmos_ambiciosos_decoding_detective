@@ -26,3 +26,17 @@ def arvore_huffman(word):
         heappush(heap, merge)
     
     return heappop(heap)
+
+def geracao_codigo(raiz):
+    codigo = {}
+
+    def code(no_atual : No, no : No):
+        if no_atual is not None:
+            if no_atual.caractere is not None:
+                codigo[no_atual.caractere] = no
+            code(no_atual.left, no + "0")
+            code(no_atual.right, no + "1")
+    
+    code(raiz, "")
+    
+    return codigo
