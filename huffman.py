@@ -7,9 +7,9 @@ class No:
         self.frequencia = frequencia
         self.left = None
         self.right = None
-
-def compara(no1 : No, no2 : No):
-    return no1.frequencia < no2.frequencia
+    
+    def __lt__(self, no: No):
+        return self.frequencia < no.frequencia
 
 def arvore_huffman(word):
     frequencia_caracteres = Counter(word)
@@ -20,7 +20,7 @@ def arvore_huffman(word):
     while len(heap) > 1:
         left = heappop(heap)
         right = heappop(heap)
-        merge = No(None, left.frequencia, right.frequencia)
+        merge = No(None, left.frequencia + right.frequencia)
         merge.left = left
         merge.right = right
         heappush(heap, merge)
@@ -43,9 +43,22 @@ def geracao_codigo(raiz):
 
 def compressao(word):
     raiz = arvore_huffman(word)
-    codigo = geracao_codigo(raiz)
+    code = geracao_codigo(raiz)
 
-    word_codificada = ''.join(codigo[caractere] for caractere in word)
+    word_codificada = ''.join(code[caractere] for caractere in word)
 
-    return word_codificada, codigo
+    return word_codificada, code
 
+def descompressao(word_codificada, code : Counter):
+    codigo_reverso = {c: k for k, c in code.items()}
+    
+    codigo = ""
+    word = ""
+
+    for bit in word_codificada:
+        codigo += bit
+        if codigo in codigo_reverso:
+            word += codigo_reverso[codigo]
+            codigo = ""
+    
+    return word
