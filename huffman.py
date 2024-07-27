@@ -40,3 +40,12 @@ def geracao_codigo(raiz):
     code(raiz, "")
     
     return codigo
+
+def compressao(word):
+    raiz = arvore_huffman(word)
+    codigo = geracao_codigo(raiz)
+
+    word_codificada = ''.join(codigo[caractere] for caractere in word)
+
+    return word_codificada, codigo
+
