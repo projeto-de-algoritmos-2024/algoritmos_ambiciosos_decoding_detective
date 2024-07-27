@@ -24,3 +24,5 @@ def arvore_huffman(word):
         merge.left = left
         merge.right = right
         heappush(heap, merge)
+    
+    return heappop(heap)
